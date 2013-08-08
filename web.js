@@ -4,12 +4,21 @@ var fs = require('fs');
 var app = express.createServer(express.logger());
 
 app.get('/', function(request, response) {
-var res = fs.readFileSync("index.html", 'utf8');
-
-  response.send(res); //'Hello World 2!');
+  process_r(request, response, "index.html");
 });
 
-var port = process.env.PORT || 5000;
+app.get('/css/main.css', function(request, response) {
+  process_r(request,response,'css/main.css');
+});
+
+var process_r = function(request, response, file){
+  console.log(request);
+  var res = fs.readFileSync(file, 'utf8');
+
+  response.send(res);
+}
+
+var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
